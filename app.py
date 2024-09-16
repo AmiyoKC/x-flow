@@ -21,14 +21,6 @@ SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
 SPOTIPY_CLIENT_SECRET = os.getenv('SPOTIPY_CLIENT_SECRET')
 SPOTIPY_REDIRECT_URI = os.getenv('SPOTIPY_REDIRECT_URI', 'http://localhost:5001/callback')
 
-
-# app.secret_key = 'amiyochatterjee1976hoojahhoojah!'
-
-
-# # Spotify API credentials
-# SPOTIPY_CLIENT_ID = '0b91fb44b38a411abd6fe06ad079aa07'
-# SPOTIPY_CLIENT_SECRET = '9e0e149f921a4f3e86d9a6345d7b9354'
-# SPOTIPY_REDIRECT_URI = 'http://localhost:5001/callback'
 SCOPE = 'playlist-modify-public'
 
 # Spotify API endpoints
@@ -57,9 +49,10 @@ def hello_world():
 
   if response.status_code == 200:
       genres = response.json().get('genres', [])
+      print(f'Genres {genres}')
   else:
-      genres = []  # Handle error, maybe return an empty list
-
+      print(f'Error retrieving genres: {response.status_code}, {response.text} using hardcoded genres instea' )
+      genres  = ["acoustic", "afrobeat", "alt-rock", "alternative", "ambient", "anime", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "british", "cantopop", "chicago-house", "children", "chill", "classical", "club", "comedy", "country", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "disney", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "emo", "folk", "forro", "french", "funk", "garage", "german", "gospel", "goth", "grindcore", "groove", "grunge", "guitar", "happy", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "holidays", "honky-tonk", "house", "idm", "indian", "indie", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "kids", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "movies", "mpb", "new-age", "new-release", "opera", "pagode", "party", "philippines-opm", "piano", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "rainy-day", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "romance", "sad", "salsa", "samba", "sertanejo", "show-tunes", "singer-songwriter", "ska", "sleep", "songwriter", "soul", "soundtracks", "spanish", "study", "summer", "swedish", "synth-pop", "tango", "techno", "trance", "trip-hop", "turkish", "work-out", "world-music"]
 
   return render_template('home.html',
                          distance=distance,
@@ -98,6 +91,7 @@ def callback():
     selected_genres = session.get('selected_genres', [])
     distance = session.get('distance')
     age = int(session.get('age'))
+    print(f'age is {age} and its type is {type(age)}')
     minutes = session.get('minutes')
     print('Good Good {minutes}')
     session['access_token'] = token_info['access_token']
@@ -174,7 +168,7 @@ def create_playlist(target_bpm, minutes, selected_genres, access_token):
    response = requests.get(user_profile_url,headers=headers)
 
    if response.status_code != 200:
-      return f'Error retrieving the user profile {response.json()}'
+      return f'Error retrieving the user profile {response.text}'
    
    user_id = response.json()['id']
    ct = datetime.datetime.now()
@@ -189,7 +183,7 @@ def create_playlist(target_bpm, minutes, selected_genres, access_token):
    response = requests.post(create_playlist_url, headers=headers, json=payload)
 
    if response.status_code != 200:
-      print(f'Error creating playlist {response.json()}')
+      print(f'Error creating playlist {response.text}')
 
    playlist_id = response.json()['id']
    playlist_url = response.json()['external_urls']['spotify']
@@ -212,7 +206,7 @@ def create_playlist(target_bpm, minutes, selected_genres, access_token):
 
       response = requests.get(recommendations_url, headers=headers, params=params)
       if response.status_code != 200:
-          print(f'Error returning recommendations {response.json()}')
+          print(f'Error returning recommendations {response.text}')
       
       track_uris = [track['uri'] for track in response.json()['tracks']]
       print(f'Found {len(track_uris)} tracks to add to the playlist.')
