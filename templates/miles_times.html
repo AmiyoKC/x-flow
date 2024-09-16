@@ -1,0 +1,38 @@
+<label for="age-select"> I am </label>
+<select id="age-select" name="age">
+  {%for years in age%}
+    <option value = {{years}}>{{years}} years old </option>
+  {%endfor%}
+</select>
+
+
+<label for="miles-select"> and want to run </label>
+<select id="miles-select" name="number">
+  {%for miles in distance%}
+   <option value = {{miles}}>{{miles}} 
+     {%if miles == 1%} <p>mile</p> {%else%} <p>miles</p>  {%endif%}
+   </option>
+  {%endfor%}
+</select>
+
+<label for="pace-select"> in</label>
+<select id="pace-select-hr" name="pace-hr">
+  {%for hour in hours%}
+    <option value="{{ hour }}" {% if hour == 1 %}selected{% endif %}>{{ hour }} hr</option>
+  {%endfor%}
+</select>
+
+<select id="pace-select-min" name="pace-min">
+  {%for minutes in minutes%}
+    <option value = {{minutes}}>{{minutes}} mins. </option>
+  {%endfor%}
+</select>
+
+
+<label for="genres"> and I like running to </label>
+<select name="genre" id="genres" multiple>
+    {% for genre in genres %}
+      <option value="{{ genre }}" {% if loop.index == 1 %}selected{% endif %}>{{ genre }}</option>
+    {% endfor %}
+</select>
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+ 
+  <style>
+    #banner{
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    
+    label, select {
+      display: inline-block;  /* Ensures the label and select stay on the same line */
+      vertical-align: middle;  /* Aligns the dropdowns with the text */
+    }
+
+    label {
+      margin-right: 10px;  /* Adds some spacing between the label and dropdown */
+    }
+
+  </style>
+
+  <title>x-flow: Generate your running playlist</title>
+</head>
+  
+<body>
+  <div class="container" style="margin-left: auto; margin-right: auto; width: 80%;" >
+    <h1 class='text-center'>x-flow</h1>
+    <h5 class= 'text-center'>A Spotify playlist generator to maximize the cardiovascular efficiency of your run</h3>
+    <img src = '/static/Runner.png' alt = 'Runner' class='img-fluid mb-4' id = 'banner'>
+    
+    <form action="/store_preferences", method="POST">
+      <div>
+        {% include 'miles_times.html' %}
+      </div>
+      <button type="submit">Generate Spotify Playlist</button>
+    </form>
+
+    <br><br>
+    
+
+    <p> This will require you to login securely to your Spotify account </p>
+
+    <h1 class='text-center'>How x-flow works</h1>
+
+      <p>
+        Gotta be mindful of your running intensity to maximize cardiovascular benefits. Research shows that listening to music at a particular tempo (beats per minute or BPM) can have the effect of synchronizing the intensity of your run to your target heart rate. 
+      </p>
+      <p>  
+        An optimized run takes your heart rate to about 80% of your max heart rate. Max rate is an age dependent number and a good rule of thumb is max heart rate  = 220 - age in years.
+      </p>
+      <p>  
+        x-flow  asks for your age, distance you want to run and the time you want to finish this distance in. It divides the run into 3 stages: warm-up, the middle slog and the strong finish. 
+      </p>
+      
+      <ul>
+      <li>  
+        For the warm-up phase it chooses songs based on your preference of genres and identifies songs at whose BPM is 50% of your max heart rate. 
+      </li>
+      <li>
+       It gradually increases the intensity so that songs have an average of 70% of your max heart rate during the middle slog of your run.
+      </li>
+      <li>
+      Finally, you will experience a strong finish with songs reaching BPMs of 80% of you max heart rate.
+    </li>
+    </ul>  
+
+
+ </div>
+    
+</body>
+</html>
