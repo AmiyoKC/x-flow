@@ -97,7 +97,7 @@ def callback():
     token_info = sp_oauth.get_access_token(code)
     selected_genres = session.get('selected_genres', [])
     distance = session.get('distance')
-    age = session.get('age')
+    age = int(session.get('age'))
     minutes = session.get('minutes')
     print('Good Good {minutes}')
     session['access_token'] = token_info['access_token']
