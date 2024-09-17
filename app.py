@@ -7,6 +7,8 @@ import datetime
 import os
 from dotenv import load_dotenv
 from flask_session import Session
+from redis import Redis
+
 
 
 
@@ -17,9 +19,16 @@ load_dotenv()
 
 # Get the secret key from environment variables
 app.config["ENV"] = os.getenv("FLASK_ENV", "development")
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = True
+
+# Redis configuration - hope this works
+app.config["SESSION_TYPE"] = "redis"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_USE_SIGNER"] = True
+app.config["SESSION_KEY_PREFIX"] = "session:"
+app.config["SESSION_REDIS"] = Redis.from_url(os.getenv("REDIS_URL"))  # Use the Redis URL from environment variables
+
+
+
 
 Session(app)
 
