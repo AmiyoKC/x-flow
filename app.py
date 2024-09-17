@@ -23,9 +23,12 @@ SPOTIPY_REDIRECT_URI = os.getenv('SPOTIPY_REDIRECT_URI', 'http://localhost:5001/
 
 SCOPE = 'playlist-modify-public'
 
-print(f"SPOTIPY_CLIENT_ID: {SPOTIPY_CLIENT_ID}")
-print(f"SPOTIPY_CLIENT_SECRET: {SPOTIPY_CLIENT_SECRET}")
-print(f"SPOTIPY_REDIRECT_URI: {SPOTIPY_REDIRECT_URI}")
+app.config.update(
+    SESSION_COOKIE_SECURE=True,  # Only transmit the session cookie over HTTPS
+    SESSION_COOKIE_HTTPONLY=True,  # Protect the session cookie from JavaScript access
+    SESSION_COOKIE_SAMESITE='Lax'  # Control when the cookie is sent (adjust as necessary)
+)
+
 
 
 # Spotify API endpoints
@@ -131,7 +134,8 @@ def store_preferences():
    session['minutes'] = minutes
    session['age'] = int(age)
 
-   
+   print(f"Session before login redirect: {session}")
+
 
    return redirect('/login')
 
