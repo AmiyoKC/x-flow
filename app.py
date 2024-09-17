@@ -23,6 +23,11 @@ SPOTIPY_REDIRECT_URI = os.getenv('SPOTIPY_REDIRECT_URI', 'http://localhost:5001/
 
 SCOPE = 'playlist-modify-public'
 
+print(f"SPOTIPY_CLIENT_ID: {SPOTIPY_CLIENT_ID}")
+print(f"SPOTIPY_CLIENT_SECRET: {SPOTIPY_CLIENT_SECRET}")
+print(f"SPOTIPY_REDIRECT_URI: {SPOTIPY_REDIRECT_URI}")
+
+
 # Spotify API endpoints
 
 GENRE_URL = 'https://api.spotify.com/v1/recommendations/available-genre-seeds'
@@ -125,6 +130,8 @@ def store_preferences():
    session['distance'] = int(distance)
    session['minutes'] = minutes
    session['age'] = int(age)
+
+   
 
    return redirect('/login')
 
