@@ -14,6 +14,9 @@ app = Flask(__name__)
 load_dotenv()
 
 # Get the secret key from environment variables
+app.config["ENV"] = os.getenv("FLASK_ENV", "development")
+
+
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default_secret_key')
 
 # Spotify API credentials from environment variables
@@ -23,12 +26,20 @@ SPOTIPY_REDIRECT_URI = os.getenv('SPOTIPY_REDIRECT_URI', 'http://localhost:5001/
 
 SCOPE = 'playlist-modify-public'
 
-app.config.update(
-    SESSION_COOKIE_SECURE=True,  # Only transmit the session cookie over HTTPS
-    SESSION_COOKIE_HTTPONLY=True,  # Protect the session cookie from JavaScript access
-    SESSION_COOKIE_SAMESITE='Lax'  # Control when the cookie is sent (adjust as necessary)
-)
+if app.config["ENV"] == "production":
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,  # Only transmit cookies over HTTPS
+        SESSION_COOKIE_HTTPONLY=True,  # Prevent JavaScript from accessing cookies
+        SESSION_COOKIE_SAMESITE='Lax'  # Lax ensures cookies are sent for the same-site requests
+    )
+else:
+    app.config.update(
+        SESSION_COOKIE_SECURE=False,  # In local development, do not require secure cookies
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Lax'
+    )
 
+print(f'Flask environment is {app.config["ENV"]}')
 
 
 # Spotify API endpoints
@@ -80,6 +91,7 @@ def login():
                           scope=SCOPE)
   auth_url = sp_oauth.get_authorize_url()
   print(f"Authorization URL: {auth_url}")  # Print the auth URL for debugging
+  print(f"Session before login redirect: {session}")
 
   return redirect(auth_url)
 
