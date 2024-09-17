@@ -27,6 +27,7 @@ app.config["SESSION_USE_SIGNER"] = True
 app.config["SESSION_KEY_PREFIX"] = "session:"
 app.config["SESSION_REDIS"] = Redis.from_url(os.getenv("REDIS_URL"))  # Use the Redis URL from environment variables
 
+app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 
 
 
