@@ -102,7 +102,7 @@ def hello_world():
 
   if response.status_code == 200:
       genres = response.json().get('genres', [])
-      print(f'Genres {genres}')
+      #print(f'Genres {genres}')
   else:
       print(f'Error retrieving genres: {response.status_code}, {response.text} using hardcoded genres instea' )
       genres  = ["acoustic", "afrobeat", "alt-rock", "alternative", "ambient", "anime", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "british", "cantopop", "chicago-house", "children", "chill", "classical", "club", "comedy", "country", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "disney", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "emo", "folk", "forro", "french", "funk", "garage", "german", "gospel", "goth", "grindcore", "groove", "grunge", "guitar", "happy", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "holidays", "honky-tonk", "house", "idm", "indian", "indie", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "kids", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "movies", "mpb", "new-age", "new-release", "opera", "pagode", "party", "philippines-opm", "piano", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "rainy-day", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "romance", "sad", "salsa", "samba", "sertanejo", "show-tunes", "singer-songwriter", "ska", "sleep", "songwriter", "soul", "soundtracks", "spanish", "study", "summer", "swedish", "synth-pop", "tango", "techno", "trance", "trip-hop", "turkish", "work-out", "world-music"]
@@ -125,9 +125,11 @@ def login():
                           scope=SCOPE)
   auth_url = sp_oauth.get_authorize_url()
   print(f"Authorization URL: {auth_url}")  # Print the auth URL for debugging
-  print(f"Session before login redirect: {session}")
+  print(f"Session before auth url redirct login redirect: {session}")
   
   session.modified = True  # Mark session as modified
+  
+  print(f"Session before auth url redirct login redirect 2 : {session}")
 
   return redirect(auth_url)
 
@@ -191,6 +193,7 @@ def store_preferences():
    print(f"Session before login redirect: {session}")
 
    session.modified = True
+   print(f"Session before login redirect 2: {session}")
 
 
 
