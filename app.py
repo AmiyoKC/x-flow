@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 from flask_session import Session
 from redis import Redis
 from datetime import timedelta
+from flask_cors import CORS
+
+
 
 
 
@@ -16,7 +19,7 @@ from datetime import timedelta
 
 
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)
 load_dotenv()
 
 # Get the secret key from environment variables
