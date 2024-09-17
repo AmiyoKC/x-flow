@@ -8,6 +8,8 @@ import os
 from dotenv import load_dotenv
 from flask_session import Session
 from redis import Redis
+from datetime import timedelta
+
 
 
 
@@ -29,7 +31,7 @@ app.config["SESSION_REDIS"] = Redis.from_url(os.getenv("REDIS_URL"))  # Use the 
 
 app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 
-
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
 Session(app)
 
@@ -168,7 +170,8 @@ def callback():
 
 @app.route('/store_preferences',methods=['POST'])
 def store_preferences():
-   
+   session.permanent = True  # Set the session to be permanent to use the lifetime
+
    selected_genres = request.form.getlist('genre')
    distance = request.form.get('number')
    age = request.form.get('age')
@@ -181,6 +184,9 @@ def store_preferences():
    session['age'] = int(age)
 
    print(f"Session before login redirect: {session}")
+
+   session.modified = True
+
 
 
    return redirect('/login')
