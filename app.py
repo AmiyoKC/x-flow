@@ -35,6 +35,16 @@ Session(app)
 
 
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default_secret_key')
+redis_connected = False
+
+
+
+try:
+    redis = Redis.from_url(os.getenv("REDIS_URL"))
+    redis.ping()
+    print("Connected to Redis on startup")
+except Exception as e:
+    print(f"Failed to connect to Redis on startup: {e}")
 
 # Spotify API credentials from environment variables
 SPOTIPY_CLIENT_ID = os.getenv('SPOTIPY_CLIENT_ID')
