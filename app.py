@@ -123,6 +123,8 @@ def login():
   auth_url = sp_oauth.get_authorize_url()
   print(f"Authorization URL: {auth_url}")  # Print the auth URL for debugging
   print(f"Session before login redirect: {session}")
+  
+  session.modified = True  # Mark session as modified
 
   return redirect(auth_url)
 
