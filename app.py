@@ -30,7 +30,7 @@ if app.config["ENV"] == "production":
     app.config.update(
         SESSION_COOKIE_SECURE=True,  # Only transmit cookies over HTTPS
         SESSION_COOKIE_HTTPONLY=True,  # Prevent JavaScript from accessing cookies
-        SESSION_COOKIE_SAMESITE='Lax'  # Lax ensures cookies are sent for the same-site requests
+        SESSION_COOKIE_SAMESITE='None'  # Lax ensures cookies are sent for the same-site requests
     )
 else:
     app.config.update(
