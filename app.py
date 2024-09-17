@@ -99,6 +99,7 @@ def login():
 @app.route('/callback')
 def callback():
   print(f"Session before callback: {session}")  # Add this to inspect the session content
+  print(f'Request header is {request.headers}')
 
   sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
     client_secret=SPOTIPY_CLIENT_SECRET,
