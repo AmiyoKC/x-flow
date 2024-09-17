@@ -6,6 +6,8 @@ import requests
 import datetime
 import os
 from dotenv import load_dotenv
+from flask_session import Session
+
 
 
 
@@ -15,6 +17,11 @@ load_dotenv()
 
 # Get the secret key from environment variables
 app.config["ENV"] = os.getenv("FLASK_ENV", "development")
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+
+Session(app)
 
 
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'default_secret_key')
