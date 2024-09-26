@@ -170,7 +170,7 @@ def login():
                             scope=SCOPE)
     auth_url = sp_oauth.get_authorize_url()
     return redirect(auth_url)
-
+#Amiyo
 @app.route('/callback')
 def callback():
     sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
